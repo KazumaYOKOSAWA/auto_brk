@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import TextInput from "./components/TextInput.tsx"
+import TextOutput from "./components/TextOutput.tsx";
+import CopyButton from "./components/CopyButton.tsx";
+import { formatText } from "./utils/formatText.ts";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+
+  const handleFormat = () => {
+    setOutput(formatText(input));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ maxWidth: "800px", margin: "auto", padding: "20px" }}>
+      <h2>文頭キーワード改行アプリ</h2>
+
+      <TextInput value={input} onChange={setInput} />
+
+      <button onClick={handleFormat} style={{ margin: "10px 0" }}>
+        改行する
+      </button>
+
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <CopyButton text={output} />
+        <span>文字数: {output.length}</span>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      <TextOutput value={output} />
+    </div>
+  );
 }
 
-export default App
+export default App;
